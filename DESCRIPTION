@@ -1,6 +1,6 @@
 Package: fio
 Title: Friendly Input-Output Analysis
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
   person(
     given = "Alberson",
@@ -28,12 +28,12 @@ BugReports: https://github.com/albersonmiranda/fio/issues
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Depends: R (>= 4.0)
-SystemRequirements: Cargo (Rust's package manager), rustc (Rust's
-        compiler)
+SystemRequirements: Cargo (Rust's package manager), rustc >= 1.67.1, xz
 LazyData: true
-Imports: cli, clipr, emoji, fs, miniUI, readxl, rlang, shiny, Rdpack
+Imports: cli, clipr, emoji, fs, miniUI, readxl, rlang, shiny, Rdpack,
+        R6
 License: MIT + file LICENSE
-Config/rextendr/version: 0.3.1
+Config/rextendr/version: 0.3.1.9000
 Suggests: knitr, rmarkdown, spelling, microbenchmark, leontief,
         ggplot2, writexl, callr, testthat (>= 3.0.0)
 VignetteBuilder: knitr
@@ -41,10 +41,10 @@ Language: en-US
 Config/testthat/edition: 3
 RdMacros: Rdpack
 NeedsCompilation: yes
-Packaged: 2024-07-30 15:54:41 UTC; albersonmiranda
+Packaged: 2024-08-16 10:17:34 UTC; albersonmiranda
 Author: Alberson da Silva Miranda [aut, cre, cph]
     (<https://orcid.org/0000-0001-9252-4175>),
   Celso Bissoli Sessa [dtc] (<https://orcid.org/0000-0001-7616-0244>)
 Maintainer: Alberson da Silva Miranda <albersonmiranda@hotmail.com>
 Repository: CRAN
-Date/Publication: 2024-08-01 14:40:05 UTC
+Date/Publication: 2024-08-21 12:40:02 UTC
