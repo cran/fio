@@ -42,7 +42,7 @@ You can install the latest stable release of {fio} from CRAN with:
 install.packages("fio")
 ```
 
-### Latest Tested version
+### Latest tested version
 
 install the latest tested but unreleased version from the [main
 branch](https://github.com/albersonmiranda/fio/tree/main), use the
@@ -55,15 +55,14 @@ install.packages("fio", repos = c("https://albersonmiranda.r-universe.dev", "htt
 
 ### Development version
 
-For the cutting-edge development version from the [dev
-branch](https://github.com/albersonmiranda/fio/tree/dev), you’ll need to
-compile it from source. This requires [Rust](https://www.rust-lang.org/)
-to be installed on your system. You can install Rust using the following
-commands:
+For the cutting-edge development version from the development branches,
+you’ll need to compile it from source. This requires
+[Rust](https://www.rust-lang.org/) to be installed on your system. You
+can install Rust using the following commands:
 
 - Debian/Ubuntu: `apt-get install cargo`
 - Fedora/CentOS: `dnf install cargo`
-- macOS: `brew install rustc`
+- macOS: `brew install rust`
 - Windows: <https://www.rust-lang.org/tools/install>
 
 ## Getting Started

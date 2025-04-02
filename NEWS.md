@@ -1,3 +1,19 @@
+# fio 0.1.5
+
+## 🐞 Bug fixes
+
+* Fix R-devel (4.5) issues (#119).
+* Remove CARGO_LINKER environment variable to use the correct linker for Windows (#123).
+
+## 💥 Breaking changes
+
+* Removed `threads` slot from `iom` object (#95).
+
+## 🛠️ Other improvements
+
+* Fix homebrew installation instructions in README and `tools/msrv.r` (#105).
+* Translate `br_2020` dataset to English (#113).
+
 # fio 0.1.2
 
 ## 🛠️ Other improvements

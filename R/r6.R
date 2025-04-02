@@ -32,8 +32,6 @@
 #' Setting row names is advised for better readability.
 #' @param occupation (`matrix`)\cr
 #' Occupation matrix.
-#' @param threads (`integer`)\cr
-#' Number of threads available for Rust to run in parallel.
 #'
 #' @return A new instance of the `iom` class.
 #'
@@ -180,10 +178,6 @@ iom <- R6Class(
     #' Absolute and relative backward and forward differences in total output after a hypothetical extraction
     hypothetical_extraction = NULL,
 
-    #' @field threads (`integer`)\cr
-    #' Number of threads available for Rust to run in parallel
-    threads = 0,
-
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function(id,
@@ -198,8 +192,7 @@ iom <- R6Class(
                           wages = NULL,
                           operating_income = NULL,
                           value_added_others = NULL,
-                          occupation = NULL,
-                          threads = 0) {
+                          occupation = NULL) {
       ### assertions ###
       # check class
       for (matrix in private$iom_elements()) {
@@ -476,10 +469,11 @@ iom <- R6Class(
     #' @details
     #' It computes the technical coefficients matrix, a \eqn{n x n} matrix known as `A` matrix which is the column-wise
     #' ratio of intermediate transactions to total production \insertCite{leontief_economia_1983}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
     #' total_production <- matrix(c(100, 200, 300), 1, 3)
@@ -532,10 +526,11 @@ iom <- R6Class(
     #' Since the Leontief matrix is a square matrix and the subtraction of the technical coefficients matrix from the
     #' identity matrix guarantees that the Leontief matrix is invertible, underlined Rust function uses LU decomposition
     #' to solve the equation.
+    #'
+    #' ## References:
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
     #' total_production <- matrix(c(100, 200, 300), 1, 3)
@@ -580,9 +575,11 @@ iom <- R6Class(
     #' the direct and indirect output multipliers, which are the column sums of the technical
     #' coefficients matrix and the difference between total and direct output multipliers, respectively
     #' \insertCite{vale_alise_2020}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -639,10 +636,11 @@ iom <- R6Class(
     #' initial exogenous shock \insertCite{miller_input-output_2009}{fio}.
     #'
     #' Current implementation follows \insertCite{vale_alise_2020}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -704,10 +702,11 @@ iom <- R6Class(
     #' \insertCite{miller_input-output_2009}{fio}.
     #'
     #' Current implementation follows \insertCite{vale_alise_2020}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -769,10 +768,11 @@ iom <- R6Class(
     #' \insertCite{miller_input-output_2009}{fio}.
     #'
     #' Current implementation follows \insertCite{vale_alise_2020}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -837,13 +837,14 @@ iom <- R6Class(
     #' It determines which sectors have the greatest influence over others,
     #' specifically, which coefficients, when altered, would have the greatest
     #' impact on the system as a whole \insertCite{vale_alise_2020}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @param epsilon (`numeric`)\cr
     #' Epsilon value. A technical change in the input-output matrix, caused by a variation of size `epsilon` into each
     #' element of technical coefficients matrix.
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -901,10 +902,11 @@ iom <- R6Class(
     #' As both power and sensitivity of dispersion are related to average values on the economy, coefficients of
     #' variation are also calculated for both indices. The lesser the coefficient of variation, greater the number of
     #' sectors on the demand or supply structure of that sector \insertCite{vale_alise_2020}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -966,10 +968,11 @@ iom <- R6Class(
     #' @details
     #' It computes the allocation coefficients matrix, a \eqn{n x n} matrix known as `B` matrix which is the row-wise
     #' ratio of intermediate transactions to total production \insertCite{miller_input-output_2009}{fio}.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
     #' total_production <- matrix(c(100, 200, 300), 1, 3)
@@ -1011,10 +1014,11 @@ iom <- R6Class(
     #' It computes the Ghosh inverse matrix \insertCite{miller_input-output_2009}{fio}, defined as:
     #' \deqn{G = (I - B)^{-1}}
     #' where I is the identity matrix and B is the allocation coefficients matrix.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
     #' total_production <- matrix(c(100, 200, 300), 1, 3)
@@ -1056,10 +1060,11 @@ iom <- R6Class(
     #' sector \insertCite{miller_input-output_2009}{fio}.
     #'
     #' The total impact is calculated by the sum of the direct and indirect impacts.
+    #'
+    #' ## References
+    #' \insertCited{}
     #' @return
     #' Self (invisibly).
-    #' @references
-    #' \insertAllCited{}
     #' @examples
     #' # data
     #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -1176,29 +1181,25 @@ iom <- R6Class(
     #' @return
     #' This function does not return a value.
     #' @examples
-    #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
-    #' total_production <- matrix(c(100, 200, 300), 1, 3)
-    #' # instantiate iom object
-    #' my_iom <- fio::iom$new("test", intermediate_transactions, total_production)
-    #' # to run single threaded (sequential)
-    #' my_iom$set_max_threads(1L)
-    #' my_iom$threads
+    #' \dontrun{
+    #'  intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
+    #'  total_production <- matrix(c(100, 200, 300), 1, 3)
+    #'  # instantiate iom object
+    #'  my_iom <- fio::iom$new("test", intermediate_transactions, total_production)
+    #'  # to run single threaded (sequential)
+    #'  my_iom$set_max_threads(1L)
+    #' }
     set_max_threads = function(max_threads) {
       # assert type
       if (!(is.integer(max_threads) && max_threads >= 0)) {
-        error("max_threads must be a positive integer.")
+        return(error("max_threads must be a positive integer."))
       }
 
-      if (self$threads == 0 && max_threads == 0) {
-        alert("0 means all available threads, which is default behavior. Nothing changed")
+      if (max_threads == 0) {
+        return(alert("0 means all available threads, which is default behavior. Nothing changed"))
       }
 
-      if (self$threads > 0) {
-        error("Max threads already been set in this session.")
-      } else {
-        set_max_threads(max_threads)
-        self$threads <- max_threads
-      }
+      return(set_max_threads(max_threads))
     }
   ),
 
