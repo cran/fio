@@ -1,6 +1,6 @@
 Package: fio
 Title: Friendly Input-Output Analysis
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: c(
   person(
     given = "Alberson",
@@ -28,7 +28,7 @@ BugReports: https://github.com/albersonmiranda/fio/issues
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Depends: R (>= 4.2)
-SystemRequirements: Cargo (Rust's package manager), rustc >= 1.67.1, xz
+SystemRequirements: Cargo (Rust's package manager), rustc >= 1.77, xz
 LazyData: true
 Imports: cli, clipr, emoji, fs, miniUI, readxl, rlang, shiny, Rdpack (>
         2.3.1), R6
@@ -41,10 +41,10 @@ Language: en-US
 Config/testthat/edition: 3
 RdMacros: Rdpack
 NeedsCompilation: yes
-Packaged: 2025-04-02 19:47:55 UTC; albersonmiranda
+Packaged: 2025-04-05 13:50:51 UTC; albersonmiranda
 Author: Alberson da Silva Miranda [aut, cre, cph]
     (<https://orcid.org/0000-0001-9252-4175>),
   Celso Bissoli Sessa [dtc] (<https://orcid.org/0000-0001-7616-0244>)
 Maintainer: Alberson da Silva Miranda <albersonmiranda@hotmail.com>
 Repository: CRAN
-Date/Publication: 2025-04-02 21:50:09 UTC
+Date/Publication: 2025-04-06 07:50:02 UTC
