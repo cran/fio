@@ -1,10 +1,15 @@
-use faer::{Mat, prelude::SpSolver};
+use faer::{Mat, linalg::solvers::Solve};
 use extendr_api::prelude::*;
 use rayon::prelude::*;
 
 #[extendr]
 /// @description
 /// Computes technical coefficients matrix.
+/// 
+/// @param intermediate_transactions
+/// A \eqn{n x n} matrix of intermediate transactions.
+/// @param total_production
+/// A \eqn{1 x n} vector of total production.
 /// 
 /// @details
 /// It computes the technical coefficients matrix, a \eqn{n x n} matrix known as `A` matrix which is the column-wise
@@ -15,18 +20,6 @@ use rayon::prelude::*;
 ///
 /// Underlined Rust code uses Rayon crate to parallelize the computation. So there is no need to use future or
 /// async/await to parallelize.
-/// 
-/// @param intermediate_transactions
-/// A \eqn{n x n} matrix of intermediate transactions.
-/// @param total_production
-/// A \eqn{1 x n} vector of total production.
-/// 
-/// @details
-/// It computes the technical coefficients matrix, which is the columnwise ratio of
-/// intermediate transactions to total production \insertCite{leontief_economia_1983}{fio}.
-/// 
-/// Underlined Rust code uses Rayon crate to parallelize the computation by
-/// default, so there is no need to use future or async/await to parallelize.
 /// 
 /// @return
 /// A \eqn{n x n} matrix of technical coefficients, known as A matrix.

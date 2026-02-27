@@ -1,3 +1,21 @@
+# fio 1.0.0
+
+## ✨ Enhancements
+
+* New `miom()` function to create multi-regional input-output models (#155).
+  - New `get_bilateral_trade()` function to extract bilateral trade flows from multi-regional input-output models.
+  - New `compute_multiregional_multipliers()` function to compute intra-regional, inter-regional and spillover multipliers from multi-regional input-output models.
+  - New `get_spillover_matrix()` function to show how shocks in one region affect other regions in multi-regional input-output models.
+  - New `get_net_spillover_matrix()` function to show net spillover effects between regions pairs in multi-regional input-output models.
+  - New `get_regional_interdependence()` function to compute regional self-reliance and interdependence measures in multi-regional input-output models.
+* New `close_model()` method to support closed single-region input-output models by moving household and/or government sectors from final demand to intermediate transactions matrix (#154).
+* New param `matrix` to `compute_key_sectors()` and `compute_hypothetical_extraction()` so users can decide if should be used Leontief or Ghosh matrices when computing forward linkages (#148).
+* New `download_wiod()` function to download World Input-Output Database (WIOD) tables directly from their website (#152).
+
+## 💥 Breaking changes
+
+* Built-in data (`fio::br_2020` and `fio::world_2000`) was moved from {fio} to a data-only companion package [{fiodata}](https://github.com/albersonmiranda/fiodata).
+
 # fio 0.1.6
 
 ## 🐞 Bug fixes

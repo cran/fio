@@ -1,6 +1,6 @@
 Package: fio
 Title: Friendly Input-Output Analysis
-Version: 0.1.6
+Version: 1.0.0
 Authors@R: c(
   person(
     given = "Alberson",
@@ -17,34 +17,33 @@ Authors@R: c(
     comment = c(ORCID = "0000-0001-7616-0244")
     )
   )
-Description: Simplifies the process of importing and managing input-output
-  matrices from 'Microsoft Excel' into R, and provides a suite of functions for
-  analysis. It leverages the 'R6' class for clean, memory-efficient
-  object-oriented programming. Furthermore, all linear algebra computations are
-  implemented in 'Rust' to achieve highly optimized performance.
+Description: Simplifies the process of economic input-output analysis by combining
+  user-friendly interfaces with high-performance computation. It provides tools
+  for analyzing both single-region and multi-regional economic systems through a
+  hybrid architecture that pairs R's accessibility with Rust's computational efficiency.
 URL: https://albersonmiranda.github.io/fio/,
         https://github.com/albersonmiranda/fio
 BugReports: https://github.com/albersonmiranda/fio/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: R (>= 4.2)
-SystemRequirements: Cargo (Rust's package manager), rustc >= 1.77, xz
-LazyData: true
+SystemRequirements: Cargo (Rust's package manager), rustc >= 1.84, xz
 Imports: cli, clipr, emoji, fs, miniUI, readxl, rlang, shiny, Rdpack (>
         2.3.1), R6
 License: MIT + file LICENSE
-Config/rextendr/version: 0.3.1.9001
-Suggests: knitr, rmarkdown, spelling, microbenchmark, leontief,
-        ggplot2, writexl, callr, testthat (>= 3.0.0)
+Config/rextendr/version: 0.4.2.9000
+Suggests: knitr, rmarkdown, spelling, bench, leontief, ggplot2,
+        writexl, callr, testthat (>= 3.0.0), fiodata
 VignetteBuilder: knitr
 Language: en-US
 Config/testthat/edition: 3
 RdMacros: Rdpack
 NeedsCompilation: yes
-Packaged: 2025-04-05 13:50:51 UTC; albersonmiranda
-Author: Alberson da Silva Miranda [aut, cre, cph]
-    (<https://orcid.org/0000-0001-9252-4175>),
-  Celso Bissoli Sessa [dtc] (<https://orcid.org/0000-0001-7616-0244>)
+Packaged: 2026-02-26 15:10:30 UTC; albersonmiranda
+Author: Alberson da Silva Miranda [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0001-9252-4175>),
+  Celso Bissoli Sessa [dtc] (ORCID:
+    <https://orcid.org/0000-0001-7616-0244>)
 Maintainer: Alberson da Silva Miranda <albersonmiranda@hotmail.com>
 Repository: CRAN
-Date/Publication: 2025-04-06 07:50:02 UTC
+Date/Publication: 2026-02-27 08:40:02 UTC

@@ -10,39 +10,13 @@
 #' @useDynLib fio, .registration = TRUE
 NULL
 
-#' Sets max number of threads used by fio
-#'
-#' @details
-#' Calling this function sets a global limit of threads to Rayon crate, affecting
-#' all computations that runs in parallel by default.
-#'
-#' Default behavior of Rayon is to use all available threads (including logical).
-#' Setting to 1 will result in single threaded (sequential) computations.
-#'
-#' Initialization of the global thread pool happens exactly once.
-#' Once started, the configuration cannot be changed in the current session.
-#' If `set_max_threads()` is called again in the same session, it'll result
-#' in an error.
-#'
-#' @param max_threads Int.
-#' Default is 0 (all threads available). 1 means single threaded.
-#'
-#' @return
-#' This functions does not return a value.
-#'
-#' @examples
-#' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
-#' total_production <- matrix(c(100, 200, 300), 1, 3)
-#' # instantiate iom object
-#' my_iom <- fio::iom$new("test", intermediate_transactions, total_production)
-#' # to run single threaded (sequential)
-#' my_iom$set_max_threads(1L)
-#'
-#' @noRd
-set_max_threads <- function(max_threads) invisible(.Call(wrap__set_max_threads, max_threads))
-
 #' @description
 #' Computes technical coefficients matrix.
+#' 
+#' @param intermediate_transactions
+#' A \eqn{n x n} matrix of intermediate transactions.
+#' @param total_production
+#' A \eqn{1 x n} vector of total production.
 #' 
 #' @details
 #' It computes the technical coefficients matrix, a \eqn{n x n} matrix known as `A` matrix which is the column-wise
@@ -53,18 +27,6 @@ set_max_threads <- function(max_threads) invisible(.Call(wrap__set_max_threads, 
 #'
 #' Underlined Rust code uses Rayon crate to parallelize the computation. So there is no need to use future or
 #' async/await to parallelize.
-#' 
-#' @param intermediate_transactions
-#' A \eqn{n x n} matrix of intermediate transactions.
-#' @param total_production
-#' A \eqn{1 x n} vector of total production.
-#' 
-#' @details
-#' It computes the technical coefficients matrix, which is the columnwise ratio of
-#' intermediate transactions to total production \insertCite{leontief_economia_1983}{fio}.
-#' 
-#' Underlined Rust code uses Rayon crate to parallelize the computation by
-#' default, so there is no need to use future or async/await to parallelize.
 #' 
 #' @return
 #' A \eqn{n x n} matrix of technical coefficients, known as A matrix.
@@ -150,26 +112,23 @@ compute_multiplier_output_indirect <- function(technical_coefficients_matrix, le
 
 #' @description
 #' Computes requirements for a given value-added vector (direct multiplier).
-#' 
+#'
 #' @details
 #' For others value-added components that doesn't get dedicated slots in the input-output table,
 #' users can calculate multipliers by:
-#' 
+#'
 #' 1. computing the requirements for a given value-added vector;
 #' 2. computing the generator matrix for a given value-added vector;
 #' 3. and, finally, computing the multiplier for a given value-added vector.
-#' 
+#'
 #' Current implementation follows \insertCite{vale_alise_2020}{fio}.
-#' 
+#'
 #' @param value_added_element A value-added vector.
 #' @param total_production The total production vector.
 #' @return A 1xn vector of a given value-added coefficients.
-#' 
+#'
 #' @references \insertAllCited{}
-#' 
-#' @seealso
-#' [compute_multiplier_value_added()] for computing multipliers.
-#' 
+#'
 #' @examples
 #' # data
 #' transporation_revenue <- c(100, 200, 300)
@@ -177,7 +136,7 @@ compute_multiplier_output_indirect <- function(technical_coefficients_matrix, le
 #' # compute requirements
 #' reqs <- compute_requirements_value_added(transporation_revenue, total_production)
 #' reqs
-#' 
+#'
 #' @noRd
 compute_requirements_value_added <- function(value_added_element, total_production) .Call(wrap__compute_requirements_value_added, value_added_element, total_production)
 
@@ -190,27 +149,24 @@ compute_generator_value_added <- function(value_added_requirements, leontief_inv
 
 #' @description
 #' Computes multiplier for a given value-added vector.
-#' 
+#'
 #' @details
 #' For others value-added components that doesn't get dedicated slots in the input-output table,
 #' users can calculate multipliers by:
-#' 
+#'
 #' 1. computing the requirements for a given value-added vector;
 #' 2. computing the generator matrix for a given value-added vector;
 #' 3. and, finally, computing the multiplier for a given value-added vector.
-#' 
+#'
 #' Current implementation follows \insertCite{vale_alise_2020}{fio}.
-#' 
+#'
 #' @param value_added_requirements The coefficients for a given value-added vector.
 #' @param leontief_inverse_matrix The open model Leontief inverse matrix.
-#' 
+#'
 #' @return A 1xn vector of a given value-added multipliers.
-#' 
+#'
 #' @references \insertAllCited{}
-#' 
-#' @seealso
-#' [compute_requirements_value_added] for computing multipliers.
-#' 
+#'
 #' @examples
 #' # data
 #' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
@@ -225,7 +181,7 @@ compute_generator_value_added <- function(value_added_requirements, leontief_inv
 #' # get multipliers
 #' multipliers <- compute_multiplier_value_added(reqs, leontief_inverse)
 #' multipliers
-#' 
+#'
 #' @noRd
 compute_multiplier_value_added <- function(value_added_requirements, leontief_inverse_matrix) .Call(wrap__compute_multiplier_value_added, value_added_requirements, leontief_inverse_matrix)
 
@@ -282,10 +238,10 @@ compute_field_influence <- function(tech_coeff_matrix, leontief_inverse_matrix, 
 compute_power_dispersion_cv <- function(leontief_inverse_matrix) .Call(wrap__compute_power_dispersion_cv, leontief_inverse_matrix)
 
 #' Computes sensitivity of dispersion coefficients of variation
-#' @param leontief_inverse_matrix A nxn matrix of Leontief inverse.
+#' @param leontief_inverse_matrix A nxn matrix of Leontief or Ghosh inverse.
 #' @return A vector of sensitivity of dispersion coefficients of variation.
 #' @noRd
-compute_sensitivity_dispersion_cv <- function(leontief_inverse_matrix) .Call(wrap__compute_sensitivity_dispersion_cv, leontief_inverse_matrix)
+compute_sensitivity_dispersion_cv <- function(matrix) .Call(wrap__compute_sensitivity_dispersion_cv, matrix)
 
 #' Computes power of dispersion
 #' @param leontief_inverse_matrix A nxn matrix of Leontief inverse.
@@ -294,10 +250,10 @@ compute_sensitivity_dispersion_cv <- function(leontief_inverse_matrix) .Call(wra
 compute_power_dispersion <- function(leontief_inverse_matrix) .Call(wrap__compute_power_dispersion, leontief_inverse_matrix)
 
 #' @description Computes sensitivity of dispersion
-#' @param leontief_inverse_matrix A nxn matrix of Leontief inverse.
+#' @param matrix A nxn matrix of Leontief or Ghosh inverse.
 #' @return A vector of sensitivity of dispersion.
 #' @noRd
-compute_sensitivity_dispersion <- function(leontief_inverse_matrix) .Call(wrap__compute_sensitivity_dispersion, leontief_inverse_matrix)
+compute_sensitivity_dispersion <- function(matrix) .Call(wrap__compute_sensitivity_dispersion, matrix)
 
 #' Computes allocation coefficients matrix.
 #' 
@@ -370,7 +326,7 @@ compute_extraction_backward <- function(technical_coefficients_matrix, final_dem
 #' @description
 #' Computes impact on supply structure after extracting a given sector \insertCite{miller_input-output_2009}{fio}.
 #' 
-#' @param allocation_coefficients_matrix A nxn matrix of allocation coefficients.
+#' @param matrix A nxn matrix of technical or allocation coefficients.
 #' @param value_added_matrix The value-added matrix.
 #' @param total_production A 1xn vector of total production.
 #' 
@@ -378,7 +334,7 @@ compute_extraction_backward <- function(technical_coefficients_matrix, final_dem
 #' \insertAllCited{}
 #' 
 #' @noRd
-compute_extraction_forward <- function(allocation_coefficients_matrix, value_added_matrix, total_production) .Call(wrap__compute_extraction_forward, allocation_coefficients_matrix, value_added_matrix, total_production)
+compute_extraction_forward <- function(matrix, value_added_matrix, total_production) .Call(wrap__compute_extraction_forward, matrix, value_added_matrix, total_production)
 
 #' Computes total impact after extracting a given sector.
 #' @param backward_linkage_matrix A nx2 matrix of backward linkage.
@@ -417,6 +373,37 @@ compute_extraction_forward <- function(allocation_coefficients_matrix, value_add
 #' 
 #' @noRd
 compute_extraction_total <- function(backward_linkage_matrix, forward_linkage_matrix) .Call(wrap__compute_extraction_total, backward_linkage_matrix, forward_linkage_matrix)
+
+#' Sets max number of threads used by fio
+#'
+#' @details
+#' Calling this function sets a global limit of threads to Rayon crate, affecting
+#' all computations that runs in parallel by default.
+#'
+#' Default behavior of Rayon is to use all available threads (including logical).
+#' Setting to 1 will result in single threaded (sequential) computations.
+#'
+#' Initialization of the global thread pool happens exactly once.
+#' Once started, the configuration cannot be changed in the current session.
+#' If `set_max_threads()` is called again in the same session, it'll result
+#' in an error.
+#'
+#' @param max_threads Int.
+#' Default is 0 (all threads available). 1 means single threaded.
+#'
+#' @return
+#' This functions does not return a value.
+#'
+#' @examples
+#' intermediate_transactions <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), 3, 3)
+#' total_production <- matrix(c(100, 200, 300), 1, 3)
+#' # instantiate iom object
+#' my_iom <- fio::iom$new("test", intermediate_transactions, total_production)
+#' # to run single threaded (sequential)
+#' my_iom$set_max_threads(1L)
+#'
+#' @noRd
+set_max_threads <- function(max_threads) invisible(.Call(wrap__set_max_threads, max_threads))
 
 
 # nolint end
